@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="net", KERNEL=="wlan1", RUN+="/sbin/iwconfig wlan1 power off"
