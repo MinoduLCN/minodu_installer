@@ -18,5 +18,5 @@
 
 ## Manual Setup Instructions
 
-Setup Guide: [SETUP.md](SETUP.md)
+Read [SETUP.md](SETUP.md).
 
