@@ -20,3 +20,9 @@
 
 Read [SETUP.md](SETUP.md).
 
+## Troubleshooting
+
+* Make sure raspberrpi is reachable with `ping minodupi.local`. If not. reinstall image and make sure to set the hostname to minodupi.local
+* Make sure ssh is enabled, test with `ssh pi@minodupi.local`. Default password is *raspberry*. If it is not working reinstall image and enable ssh access.
+* Make sure your macbook is connected to the internet during the install procedure.
+
