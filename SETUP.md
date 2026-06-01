@@ -68,7 +68,7 @@ refer to [WLAN_DRIVER_SETUP.md](WLAN_DRIVER_SETUP.md)
   ctrl_interface_group=0
   auth_algs=1
   beacon_int=100
-  ssid=Minodu3
+  ssid=Minodu
   channel=1
   hw_mode=g
   ieee80211n=1
@@ -115,23 +115,6 @@ refer to [WLAN_DRIVER_SETUP.md](WLAN_DRIVER_SETUP.md)
   
  * redirect all traffic to router with `sudo iptables -t nat -A PREROUTING -i wlan1 -p udp --dport 53 -j DNAT --to 10.20.1.1 && sudo iptables -t nat -A PREROUTING -i wlan1 -p tcp --dport 53 -j DNAT --to 10.20.1.1`
 
-* create file `/home/minodu/www/hotspot-detect.html`
-
-  ```
-  <!DOCTYPE html>
-  <html>
-  <head>
-    <title>Captive Portal</title>
-    <script type="text/javascript">
-          // Redirect to the index.html page (your captive portal)
-          window.location.href = "http://minodupi.local";
-    </script>
-  </head>
-  <body>
-    <h1>Success</h1>
-  </body>
-  </html>
-  ```
 
 ## Setup Weather Station
 

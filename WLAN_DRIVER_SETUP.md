@@ -82,7 +82,7 @@ systemctl status hostapd
 # wlan1 should be UP with IP 10.20.1.1
 ip addr show wlan1
 
-# hostapd should report state=ENABLED and ssid=Minodu3
+# hostapd should report state=ENABLED and ssid=Minodu
 sudo hostapd_cli status | grep -E 'state|ssid|freq'
 ```
 
@@ -91,10 +91,10 @@ Expected output:
 ```
 state=ENABLED
 freq=2412
-ssid[0]=Minodu3
+ssid[0]=Minodu
 ```
 
-A phone or laptop should now see the `Minodu3` SSID and be able to connect without a password.
+A phone or laptop should now see the `Minodu` SSID and be able to connect without a password.
 
 ---
 
@@ -108,7 +108,7 @@ ctrl_interface=/var/run/hostapd
 ctrl_interface_group=0
 auth_algs=1
 beacon_int=100
-ssid=Minodu3
+ssid=Minodu
 channel=1
 hw_mode=g
 ieee80211n=1
