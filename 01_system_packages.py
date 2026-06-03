@@ -59,3 +59,11 @@ server.shell(
         "su - pi -c '/home/pi/.local/bin/uv python install 3.12'",
     ]
 )
+
+server.shell(
+    name="Install poetry via uv",
+    commands=[
+        "su - pi -c 'command -v poetry >/dev/null 2>&1 || "
+        "/home/pi/.local/bin/uv tool install poetry'",
+    ]
+)

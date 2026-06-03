@@ -15,7 +15,9 @@
     ```
     pip install pyinfra
     # run install script (adapt password if you used another one) 
-    pyinfra inventory.py deploy.py -v --ssh-user="pi" --ssh-password="raspberry"
+    pyinfra @ssh/minodupi.local deploy.py -v --ssh-user="pi" --ssh-password="raspberry"
+    # or
+    pyinfra @ssh/<ip-adress> deploy.py -v --ssh-user="pi" --ssh-password="raspberry"
     ```
 * follow installation instructions
 
