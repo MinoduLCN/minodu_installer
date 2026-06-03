@@ -47,5 +47,8 @@ server.shell(
 )
 
 server.reboot(
-    name="Reboot to load 88x2bu driver"
+    name="Reboot to load 88x2bu driver",
+    delay=5,
+    interval=5,
+    reboot_timeout=90,
 )
