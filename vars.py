@@ -9,6 +9,7 @@ config.SUDO = True
 print("\nMinodu Pi Installer — Configuration\n")
 
 ssid = input("WiFi SSID [Minodu]: ").strip() or "Minodu"
+wlan_country = input("WLAN country code [DE]: ").strip().upper() or "DE"
 raspap_password = getpass.getpass("RaspAP admin password [secret]: ").strip() or "secret"
 install_llm = (input("Install Minodu LLM (y/n) [y]: ").strip().lower() or "y") == "y"
 

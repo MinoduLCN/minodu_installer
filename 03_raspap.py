@@ -7,7 +7,7 @@ Run standalone:
 
 import io
 
-from vars import _set_pass_php  # noqa: F401
+from vars import _set_pass_php, ssid
 
 from pyinfra.operations import files, server
 
@@ -21,7 +21,7 @@ server.shell(
 )
 
 server.shell(
-    name="Install RaspAP (idempotent) (This will take a while)",
+    name="Install RaspAP (idempotent)",
     commands=[
         "test -d /etc/raspap || "
         "TERM=xterm bash /home/pi/raspap-webgui/installers/raspbian.sh --yes",
@@ -46,4 +46,35 @@ files.put(
 server.shell(
     name="Set RaspAP admin password",
     commands=["php /tmp/set_raspap_pass.php && rm /tmp/set_raspap_pass.php"],
+)
+
+files.template(
+    name="Configure hostapd (open network, wlan1, ch1, 2.4GHz)",
+    src="templates/hostapd.conf.j2",
+    dest="/etc/hostapd/hostapd.conf",
+    mode="644",
+    ssid=ssid,
+)
+
+files.put(
+    name="Configure dnsmasq DHCP for wlan1 (10.20.1.x)",
+    src="files/090_wlan1.conf",
+    dest="/etc/dnsmasq.d/090_wlan1.conf",
+    mode="644",
+)
+
+server.shell(
+    name="Add static IP block for wlan1 in dhcpcd.conf",
+    commands=[
+        "grep -q 'RaspAP wlan1 configuration' /etc/dhcpcd.conf || "
+        r"printf '\n# RaspAP wlan1 configuration\n"
+        r"interface wlan1\n"
+        r"static ip_address=10.20.1.1/24\n"
+        r"static routers=10.20.1.1\n"
+        r"static domain_name_servers=1.1.1.1 8.8.8.8\n' >> /etc/dhcpcd.conf",
+    ],
+)
+
+server.reboot(
+    name="Reboot after AP configuration"
 )

@@ -7,23 +7,11 @@ Run standalone:
 
 from vars import *  # noqa: F401,F403
 
-from pyinfra.operations import files, server
+from pyinfra.operations import apt, files, server
 
 server.shell(
-    name="Build and install 88x2bu WLAN driver",
-    commands=[
-        "if ! modinfo 88x2bu >/dev/null 2>&1; then "
-        "  git clone --depth=1 https://github.com/morrownr/88x2bu-20210702.git /tmp/88x2bu && "
-        "  cd /tmp/88x2bu && make -j4 && make install && depmod -a; "
-        "fi",
-    ]
-)
-
-files.put(
-    name="Blacklist in-kernel rtw88_8822bu driver",
-    src="files/blacklist-rtw88-8822bu.conf",
-    dest="/etc/modprobe.d/blacklist-rtw88-8822bu.conf",
-    mode="644",
+    name="Set WLAN country code",
+    commands=[f"raspi-config nonint do_wifi_country {wlan_country}"],
 )
 
 server.shell(
@@ -34,11 +22,28 @@ server.shell(
     ],
 )
 
-files.put(
-    name="Disable WLAN power management via udev",
-    src="files/70-rtl88x2bu-pm.rules",
-    dest="/etc/udev/rules.d/70-rtl88x2bu-pm.rules",
-    mode="644",
+server.shell(
+    name="Clone 8821au driver repository",
+    commands=[
+        "test -d /opt/8821au-20210708 || "
+        "git clone https://github.com/morrownr/8821au-20210708.git /opt/8821au-20210708",
+    ],
+)
+
+server.shell(
+    name="Install 8821au driver",
+    commands=[
+        "dkms status | grep -q '8821au' || "
+        "(cd /opt/8821au-20210708 && printf 'n\\n' | ./install-driver.sh)",
+    ],
+)
+
+server.shell(
+    name="Disable power management in 8821au driver config",
+    commands=[
+        "grep -q 'rtw_power_mgnt=0' /etc/modprobe.d/8821au.conf || "
+        "sed -i '/^options 8821au/ s/$/ rtw_power_mgnt=0/' /etc/modprobe.d/8821au.conf",
+    ],
 )
 
 server.reboot(
