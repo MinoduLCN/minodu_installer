@@ -5,33 +5,26 @@ Newer Raspberry Pi OS versions ship with the in-kernel `rtw88_8822bu` driver, wh
 ## 1. Install build dependencies
 
 ```bash
-sudo apt update
-sudo apt install git build-essential dkms bc linux-headers-$(uname -r)
+sudo apt update && sudo apt full-upgrade
+sudo apt install -y bc git dkms build-essential raspberrypi-kernel-headers
+sudo reboot
 ```
 
 ## 2. Build and install the out-of-tree driver
 
 ```bash
-cd /tmp
-git clone --depth=1 https://github.com/morrownr/88x2bu-20210702.git 88x2bu
-cd 88x2bu
-make -j4
-sudo make install
-sudo depmod -a
+git clone https://github.com/morrownr/8821au-20210708.git
+cd 8821au-20210708
+sudo ./install-driver.sh
 ```
 
-## 3. Blacklist the in-kernel driver
-
-```bash
-sudo nano /etc/modprobe.d/blacklist-rtw88-8822bu.conf
-```
-
-Add:
+## 3. Disable wifi power management
 
 ```
-blacklist rtw88_8822bu
-blacklist rtw88_8822b
-blacklist rtw88_usb
+nano /etc/modprobe.d/8821au.conf
+# search for the lne starting with options 8821au and add rtw_power_mgnt=0 at end
+options 8821au ... rtw_power_mgnt=0
+
 ```
 
 ## 4. Disable USB autosuspend
@@ -82,42 +75,6 @@ systemctl status hostapd
 # wlan1 should be UP with IP 10.20.1.1
 ip addr show wlan1
 
-# hostapd should report state=ENABLED and ssid=Minodu
+# hostapd should report state=ENABLED
 sudo hostapd_cli status | grep -E 'state|ssid|freq'
-```
-
-Expected output:
-
-```
-state=ENABLED
-freq=2412
-ssid[0]=Minodu
-```
-
-A phone or laptop should now see the `Minodu` SSID and be able to connect without a password.
-
----
-
-## Note: correct hostapd.conf for open network
-
-The config in SETUP.md contains `wpa=none` which is invalid — hostapd expects a numeric value. For an **open (no password) network**, use `wpa=0` and omit all WPA-specific keys:
-
-```
-driver=nl80211
-ctrl_interface=/var/run/hostapd
-ctrl_interface_group=0
-auth_algs=1
-beacon_int=100
-ssid=Minodu
-channel=1
-hw_mode=g
-ieee80211n=1
-interface=wlan1
-wpa=0
-country_code=DE
-ignore_broadcast_ssid=0
-ap_max_inactivity=600
-disassoc_low_ack=1
-skip_inactivity_poll=1
-wmm_enabled=1
 ```

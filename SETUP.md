@@ -115,6 +115,9 @@ refer to [WLAN_DRIVER_SETUP.md](WLAN_DRIVER_SETUP.md)
   
  * redirect all traffic to router with `sudo iptables -t nat -A PREROUTING -i wlan1 -p udp --dport 53 -j DNAT --to 10.20.1.1 && sudo iptables -t nat -A PREROUTING -i wlan1 -p tcp --dport 53 -j DNAT --to 10.20.1.1`
 
+## Install Minodu LCN
+
+* refer to [https://github.com/MinoduLCN/minodu#deployment-on-raspberry-pi](https://github.com/MinoduLCN/minodu#deployment-on-raspberry-pi).
 
 ## Setup Weather Station
 
