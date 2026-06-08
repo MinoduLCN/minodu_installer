@@ -12,20 +12,10 @@ Prerequisites (manual, once):
   - Ensure SSH key is authorised on the Pi for the pi user
 
 Run from project root:
-  pyinfra inventory.py deploy.py
+  pyinfra @ssh/minodupi.local deploy.py -v
 
 Dry-run:
-  pyinfra inventory.py deploy.py --dry
-
-Individual sections:
-  pyinfra inventory.py 01_system_packages.py
-  pyinfra inventory.py 02_wlan_driver.py
-  pyinfra inventory.py 03_raspap.py
-  pyinfra inventory.py 04_ap_config.py
-  pyinfra inventory.py 05_captive_portal.py
-  pyinfra inventory.py 06_scripts_services.py
-  pyinfra inventory.py 07_ollama.py
-  pyinfra inventory.py 08_minodu_app.py
+  pyinfra @ssh/minodupi.local deploy.py --dry
 """
 
 from pyinfra import local
@@ -39,3 +29,4 @@ local.include("04_captive_portal.py")
 local.include("05_scripts_services.py")
 local.include("06_ollama.py")
 local.include("07_minodu_app.py")
+local.include("08_sync_data.py")

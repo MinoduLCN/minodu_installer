@@ -50,23 +50,3 @@ if minodu_repo:
         name="Build and start Docker services (This will take a while when you run it the first time)",
         commands=["bash -c 'cd /home/pi/minodu && npm run docker:start'"]
     )
-
-    server.shell(
-        name="Install sync tool dependencies",
-        commands=["su - pi -c 'cd /home/pi/minodu/tools/sync && /home/pi/.local/bin/uv sync'"]
-    )
-
-    server.shell(
-        name="Sync database",
-        commands=[
-            "su - pi -c 'cd /home/pi/minodu && npm run sync:database'",
-        ]
-    )
-
-    if install_llm:
-        server.shell(
-            name="Update RAG embeddings (This will take a long time)",
-            commands=[
-                "su - pi -c 'cd /home/pi/minodu && npm run sync:rag'",
-            ]
-        )

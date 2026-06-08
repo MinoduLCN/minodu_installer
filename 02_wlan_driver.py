@@ -38,6 +38,13 @@ server.shell(
     ],
 )
 
+server.reboot(
+    name="Reboot after 8821au driver install",
+    delay=5,
+    interval=5,
+    reboot_timeout=90,
+)
+
 server.shell(
     name="Disable power management in 8821au driver config",
     commands=[
