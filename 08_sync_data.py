@@ -48,6 +48,31 @@ if minodu_repo:
         ]
     )
 
+    server.shell(
+    name="Post weather data to minodupi API",
+    commands=[
+        """curl -X 'POST' \
+        'http://minodupi.local/api/backend/v1/weather' \
+        -H 'accept: */*' \
+        -H 'Content-Type: application/json' \
+        -d '{
+        "temp": 22,
+        "temp1": 21.8,
+        "hum": 45,
+        "hum1": 47.2,
+        "press": 1013.25,
+        "lux": 320.5,
+        "ambient": 215,
+        "CO": 0.5,
+        "NO2": 12,
+        "wind_dir": 12,
+        "wind_spd": 12,
+        "uv": 12,
+        "battery": 12
+        }'"""
+        ],
+    )
+
     if install_llm:
         server.shell(
             name="Update RAG embeddings (This will take a long time)",
