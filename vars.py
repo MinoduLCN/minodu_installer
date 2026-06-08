@@ -11,7 +11,7 @@ print("\nMinodu Pi Installer — Configuration\n")
 ssid = input("WiFi SSID [Minodu]: ").strip() or "Minodu"
 wlan_country = input("WLAN country code [DE]: ").strip().upper() or "DE"
 raspap_password = getpass.getpass("RaspAP admin password [secret]: ").strip() or "secret"
-install_llm = (input("Install Minodu LLM for Chatbot (y/n) [y]: ").strip().lower() or "n") == "y"
+install_llm = (input("Install Minodu LLM for Chatbot (y/n) [n]: ").strip().lower() or "n") == "y"
 admin_phone = input("Admin phone number [90000000]: ").strip() or "90000000"
 admin_password = getpass.getpass("Admin password [secret]: ").strip() or "secret"
 print()
