@@ -36,13 +36,7 @@ server.shell(
         "dkms status | grep -q '8821au' || "
         "(cd /opt/8821au-20210708 && printf 'n\\n' | ./install-driver.sh)",
     ],
-)
-
-server.reboot(
-    name="Reboot after 8821au driver install",
-    delay=5,
-    interval=5,
-    reboot_timeout=90,
+    _ignore_errors=True 
 )
 
 server.shell(

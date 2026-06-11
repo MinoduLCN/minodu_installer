@@ -13,18 +13,14 @@ from pyinfra.operations import files, server, systemd
 
 if install_llm:
     server.shell(
+        name="Wait for systemd to finish booting",
+        commands=["systemctl is-system-running --wait || true"],
+    )
+    
+    server.shell(
         name="Install ollama",
         commands=[
             "command -v ollama >/dev/null 2>&1 || curl -fsSL https://ollama.com/install.sh | sh",
-        ]
-    )
-
-    server.shell(
-        name="Pull ollama models",
-        commands=[
-            "ollama pull llama3.2:1b",
-            "ollama pull nomic-embed-text",
-            "ollama pull all-minilm:l6-v2",
         ]
     )
 
@@ -50,4 +46,13 @@ if install_llm:
         enabled=True,
         daemon_reload=True,
         restarted=True,
+    )
+
+    server.shell(
+        name="Pull ollama models",
+        commands=[
+            "ollama pull llama3.2:1b",
+            "ollama pull nomic-embed-text",
+            "ollama pull all-minilm:l6-v2",
+        ]
     )
