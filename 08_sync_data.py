@@ -73,10 +73,3 @@ if minodu_repo:
         ],
     )
 
-    if install_llm:
-        server.shell(
-            name="Update RAG embeddings (This will take a long time)",
-            commands=[
-                "su - pi -c 'cd /home/pi/minodu && npm run sync:rag'",
-            ]
-        )
