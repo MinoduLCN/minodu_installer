@@ -41,9 +41,11 @@ if minodu_repo:
         You can check its success on the pi by logging in via ssh 
         and running `systemctl status rag-sync` to see its status.
         The service will dissapear once it build the whole database.
+        Run `cd /home/pi/minodu && npm run info:rag` to print out the
+        content of the rags vector database.
               
         You can rerun the building of the rag database by running:
-        pyinfra @ssh/minodupi.local 09_build_rag_db.py -v --ssh-user="pi" --ssh-password="raspberry"
+        pyinfra @ssh/minodupi.local 09_build_rag_db.py -v --ssh-user="pi" --ssh-password="<your-password>"
         
         The minodu app is available on http://minodupi.local.
         The backoffice can be found on http://minodupi.local:8080.
